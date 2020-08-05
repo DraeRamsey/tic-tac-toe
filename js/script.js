@@ -1,11 +1,17 @@
 'use strict';
 
+
+
+// TODO:
+//next start the player factory function
+
+
 const game_container = document.getElementById('game-container');
 var grid = "";
 
 
 //make module
-//parameters? boardplacement/ player type
+//parameters? board placement/ player type
 var GameBoard = (function() {
   var gameboard = ["-","-","-","-","-","-","-","-","-"];
   return {
@@ -24,9 +30,6 @@ var GameBoard = (function() {
 GameBoard.renderGameBoard();
 console.log(GameBoard.gameboard);
 
-
-// push the info to the array
-
 //controls the flow of the game itself
 const GameController = () =>
 {
@@ -36,10 +39,19 @@ const GameController = () =>
 }
 
 //factory function
-//player should be marked with x or o (playertype)
-const Player = () =>
+const Player = (name, type) =>
 {
+const play = () => console.log(name + ' plays ' + type);
+return { name, type, play};
 
-
-  //return {};
 }
+
+const player1 = Player("jeff", "X");
+player1.play();
+
+
+
+
+
+
+//space
