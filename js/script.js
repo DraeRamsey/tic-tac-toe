@@ -1,47 +1,46 @@
 'use strict';
 
+// TODO:
+// check if a mark has already been made to the board
+// check if there are three in a row/ win clause
+//check if there is a tie/ limit counter
+// clean up returns
+//clean up interface
 
 const game_container = document.getElementById('game-container');
 var grid = "";
 const game_squares = document.querySelectorAll('[data-index-number]');
 
-
-
-//make module
-//parameters? boardplacement/ player type
-var GameBoard = (function() {
+var GameBoard = (function()
+ {
   var gameboard = ["-","-","-","-","-","-","-","-","-"];
 
-   const renderGameBoard = function() {
+   const renderGameBoard = function()
+  {
     for (var i = 0; i < gameboard.length; i++)
     {
      grid =  document.querySelector(`[data-index-number="${i}"]`);
      grid.textContent = gameboard[i];
-
     }
+ }
 
-  }
-
-  return {
+  return{
     gameboard,
     renderGameBoard
   };
 })();
 
 
-GameBoard.renderGameBoard();
-console.log(GameBoard.gameboard);
-
 
 const Player = (name, type) =>
 {
-const play = () => console.log(name + ' plays ' + type);
-return { name, type, play};
-
+  const play = () => console.log(name + ' plays ' + type);
+  return { name, type, play};
 }
 
 const GameController = (() =>
 {
+  GameBoard.renderGameBoard();
   //input: players put in their names here
   const player1 = Player("jeff", "X");
   const player2 = Player("ben", "O");
@@ -49,7 +48,7 @@ const GameController = (() =>
   let counter = 0 //go up to 9
   determineTurn();
 
-  //turns squares into node list and adds a click event to each one
+  //turn squares into node list and adds a click event to each one
   for( var i = 0; i < game_squares.length;i++)
   {
     game_squares[i].addEventListener('click', function(){
@@ -57,16 +56,17 @@ const GameController = (() =>
       var this_square = this.getAttribute('data-index-number');
       var board = GameBoard.gameboard;
 
-      board[this_square] = player_turn.type;
-      console.log(board);
-      GameBoard.renderGameBoard();;
+      //check if mark has already been made to the board
+      if (board[this_square] === player1.type || board[this_square] === player2.type)
+        return;
+      else
+      {
+        board[this_square] = player_turn.type;
+        GameBoard.renderGameBoard();;
+        counter ++;
+        determineTurn();
 
-      //this.type goes into html (update game board)
-      //replace the gameboard array index with this.type
-      counter ++;
-      determineTurn();
-      // run player turn function
-
+      }
     });
   }
 
@@ -76,16 +76,18 @@ const GameController = (() =>
     return player_turn;
   }
 
-  function updateGame()
-  {
-
-  }
-
+  //this is just a test
   const playing = () => console.log(GameBoard.gameboard);
   return{
 
   };
 })();
+
+
+
+
+
+
 
 
 //space
