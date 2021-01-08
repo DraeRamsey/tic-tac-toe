@@ -15,13 +15,14 @@
 
 //testing
 
-var grid = "";
 
-//create node list of each square  with it's placement number
-const game_squares = document.querySelectorAll('[data-index-number]');
+
 var GameBoard = (function()
  {
-  var gameboard = [];
+   var grid = "";
+   //create node list of each square  with it's placement number
+   const game_squares = document.querySelectorAll('[data-index-number]');
+   var gameboard = [];
 
    const renderGameBoard = function()
   {
@@ -36,6 +37,7 @@ var GameBoard = (function()
  };
 
   return{
+    game_squares,
     gameboard,
     renderGameBoard,
   };
@@ -53,8 +55,8 @@ const GameController = (() =>
 {
   GameBoard.renderGameBoard();
   //input: players put in their names here
-  const player1 = Player("jeff", "X");
-  const player2 = Player("ben", "O");
+  let player1 = Player("jeff", "X");
+  let player2 = Player("ben", "O");
 
   let winner    = false;
   let tie       = false;
@@ -76,9 +78,11 @@ const GameController = (() =>
   ];
 
   //turn squares into node list and adds a click event to each one
-  for( var i = 0; i < game_squares.length;i++)
+  for( var i = 0; i < GameBoard.game_squares.length;i++)
   {
-    game_squares[i].addEventListener('click', function(){
+    GameBoard.game_squares[i].addEventListener('click', function(){
+    //console.log({winner, tie, player_up,counter});
+
       if(winner){
         return;
       }
@@ -103,7 +107,8 @@ const GameController = (() =>
                && GameBoard.gameboard[item[2]] === player_up.type){
                  console.log(player_up.name + " wins!");
                  winner = true;
-                 return winner;
+                 //change html to declare winner
+                 // call game end function
                }
 
 
@@ -114,24 +119,38 @@ const GameController = (() =>
         //check for win
 
           counter ++;
-
-          //testing
           checkWinStatus();
-          //testing
           determineTurn();
-        GameBoard.gameboard
+          determineTie();
+
+        //GameBoard.gameboard
 
 
         }
       }
-
+console.log({winner, tie, player_up,counter});
     });
   }
 
   function determineTurn()
   {
     counter % 2 === 0 ? player_up = player1 : player_up = player2
-    return player_up;
+    // change html to say whos turn it is
+  }
+
+  function determineTie(){
+    if(winner){
+      return;
+    }
+
+    else{
+    counter === 9 ? tie = true : tie = false;
+    //if tie then change the html to say so
+  }
+  }
+
+  function endGame(){
+    //do stuff here to end the game, restart settings etc
   }
 
   //this is just a test
@@ -139,6 +158,14 @@ const GameController = (() =>
   return{
 
   };
+  //this is just a test
+
+  return{
+  winner,
+  player_up,
+  counter,
+  tie
+  }
 })();
 //end game controller
 
