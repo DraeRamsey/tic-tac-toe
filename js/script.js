@@ -55,8 +55,10 @@ const GameController = (() =>
 {
   GameBoard.renderGameBoard();
   //input: players put in their names here
-  let player1 = Player("jeff", "X");
-  let player2 = Player("ben", "O");
+  let player1 = Player("Player 1", "X");
+  let player2 = Player("Player 2", "O");
+  let game_text = document.getElementById("game-text");
+
 
   let winner    = false;
   let tie       = false;
@@ -107,7 +109,7 @@ const GameController = (() =>
                && GameBoard.gameboard[item[2]] === player_up.type){
                  console.log(player_up.name + " wins!");
                  winner = true;
-                 //change html to declare winner
+                 game_text.innerHTML = player_up.name + " wins!";
                  // call game end function
                }
 
@@ -116,14 +118,12 @@ const GameController = (() =>
 
            })
          }
-        //check for win
 
           counter ++;
           checkWinStatus();
           determineTurn();
           determineTie();
 
-        //GameBoard.gameboard
 
 
         }
@@ -133,9 +133,15 @@ console.log({winner, tie, player_up,counter});
   }
 
   function determineTurn()
-  {
+  { if(winner){
+    return;
+  }
+  else{
     counter % 2 === 0 ? player_up = player1 : player_up = player2
-    // change html to say whos turn it is
+    console.log(player_up.name);
+    game_text.innerHTML = player_up.name + " It's your turn!";
+  }
+
   }
 
   function determineTie(){
@@ -144,9 +150,12 @@ console.log({winner, tie, player_up,counter});
     }
 
     else{
-    counter === 9 ? tie = true : tie = false;
-    //if tie then change the html to say so
-  }
+      counter === 9 ? tie = true : tie = false;
+
+      if(tie){
+      game_text.innerHTML = " It's a tie!";
+      }
+    }
   }
 
   function endGame(){
