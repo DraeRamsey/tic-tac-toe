@@ -1,19 +1,18 @@
 'use strict';
 
-// TODO:
+//Game is at MVP right now. It meets basic requirements and I've learned what I needed to learn for the lesson.
 
-//check if there is a tie/ limit counter
-// clean up returns
-//clean up interface
+//I've set it up with notes so I can add more features should I decide to continue working on this. I am hesitant to continue because I would like to move onto the next assigment as there is more to learn! Anything extra I do for this will be stuff I already know, it's good practice but there's a desire to move on :)
 
-//make sure to assign the play function for user exper
-//const container = document.querySelector('#container');
+//Features to add in the future!
 
-// create overlay over squares when game is finished
-//testing
+// fade out the cubes when the game is over: the CSS is already there! Just need to add the class to the cubes when somebody wins or there is a tie.
 
+//option to restart/ clear the game. With button and what not
 
-//testing
+// start the game with the squares inactive, let players input their names first before starting
+
+// let users have the option to play against a computer
 
 
 
@@ -32,10 +31,9 @@ var GameBoard = (function()
      grid.textContent = gameboard[i];
 
     }
-     console.log(gameboard);
+     //console.log(gameboard);
 
  };
-
   return{
     game_squares,
     gameboard,
@@ -47,6 +45,7 @@ var GameBoard = (function()
 
 const Player = (name, type) =>
 {
+  //was using play for something before, will leave it in incase I want to use it again
   const play = () => console.log(name + ' plays ' + type);
   return { name, type, play};
 }
@@ -54,7 +53,8 @@ const Player = (name, type) =>
 const GameController = (() =>
 {
   GameBoard.renderGameBoard();
-  //input: players put in their names here
+
+  //TODO: players put in their names here with a form
   let player1 = Player("Player 1", "X");
   let player2 = Player("Player 2", "O");
   let game_text = document.getElementById("game-text");
@@ -65,7 +65,6 @@ const GameController = (() =>
   let player_up = null;
   let counter   = 0 //go up to 9
   determineTurn();
-
 
   //the winning combinations
   const winning_combos = [
@@ -83,9 +82,7 @@ const GameController = (() =>
   for( var i = 0; i < GameBoard.game_squares.length;i++)
   {
     GameBoard.game_squares[i].addEventListener('click', function(){
-    //console.log({winner, tie, player_up,counter});
-
-      if(winner){
+        if(winner){
         return;
       }
 
@@ -101,46 +98,37 @@ const GameController = (() =>
           board[this_square] = player_up.type;
           GameBoard.renderGameBoard();
 
-        //win logic
+        //WIN LOGIC and it's not a bunch of if statements :')
          function checkWinStatus(){
            winning_combos.forEach((item) =>{
              if ( GameBoard.gameboard[item[0]] === player_up.type
                && GameBoard.gameboard[item[1]] === player_up.type
                && GameBoard.gameboard[item[2]] === player_up.type){
-                 console.log(player_up.name + " wins!");
                  winner = true;
                  game_text.innerHTML = player_up.name + " wins!";
-                 // call game end function
+                 //TODO: call game end function
                }
-
-
-
-
            })
          }
 
-          counter ++;
+         counter ++;
           checkWinStatus();
           determineTurn();
           determineTie();
-
-
-
         }
       }
-console.log({winner, tie, player_up,counter});
+
     });
   }
 
-  function determineTurn()
-  { if(winner){
-    return;
-  }
-  else{
-    counter % 2 === 0 ? player_up = player1 : player_up = player2
-    console.log(player_up.name);
-    game_text.innerHTML = player_up.name + " It's your turn!";
-  }
+  function determineTurn(){
+      if(winner){
+       return;
+      }
+      else{
+        counter % 2 === 0 ? player_up = player1 : player_up = player2
+        game_text.innerHTML = player_up.name + " It's your turn!";
+      }
 
   }
 
@@ -154,34 +142,18 @@ console.log({winner, tie, player_up,counter});
 
       if(tie){
       game_text.innerHTML = " It's a tie!";
+      //TODO: do game over function here
       }
     }
   }
 
   function endGame(){
-    //do stuff here to end the game, restart settings etc
+    // TODO: do stuff here to end the game, fade out the cubes
   }
 
-  //this is just a test
-  const playing = () => console.log(GameBoard.gameboard);
-  return{
-
-  };
-  //this is just a test
-
-  return{
-  winner,
-  player_up,
-  counter,
-  tie
+  function restartGame(){
+   //TODO: reset counter, gameboard, winner/tie etc
   }
+
+
 })();
-//end game controller
-
-
-
-
-
-
-
-//space
