@@ -6,6 +6,8 @@
 
 //Features to add in the future!
 
+//make it so users can input their name
+
 // fade out the cubes when the game is over: the CSS is already there! Just need to add the class to the cubes when somebody wins or there is a tie.
 
 //option to restart/ clear the game. With button and what not
