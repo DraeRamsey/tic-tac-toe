@@ -2,6 +2,8 @@
 
 ## This is an exercise from The Odin Project's full stack JavaScript curriculum.
 
+this game is viewable here: https://draeramsey.github.io/tic-tac-toe/
+
 The purpose of this exercise is to
 
 * Understand and gain experience in working with factory functions
